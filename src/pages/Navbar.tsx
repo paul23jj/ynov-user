@@ -4,11 +4,10 @@ function Header() {
     return(
         <nav className="Header">
             <ul>
-                <li><Link to="/">Home</Link></li>
-                <li><Link to="/userList">User List</Link></li>
-                <li><Link to="/user/:username">User</Link></li>
-                <li><Link to="/login">Login</Link></li>
-                <li><Link to="profile">Profil</Link></li>
+                <li><Link to="/">Accueil</Link></li>
+                <li><Link to="/userList">Annuaire</Link></li>
+                <li><Link to="/login">Connexion</Link></li>
+                <li><Link to="/profile">Profil</Link></li>
             </ul>
         </nav>
     );

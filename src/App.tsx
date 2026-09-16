@@ -14,9 +14,9 @@ function App() {
         <section>
             <h2>recettes :</h2>
 
-            <div className="recipes-grid">
+            <div className="grid">
                 {recipesData.recipes.map((recipe) => (
-                    <article key={recipe.id} className="recipe-card">
+                    <article key={recipe.id} className="card">
                         <img src={recipe.image} alt={recipe.name} />
                         <h3>{recipe.name}</h3>
                         <p>Temps de préparation : {recipe.prepTimeMinutes} min</p>

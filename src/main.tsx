@@ -9,6 +9,8 @@ import Header from './pages/Navbar.tsx'
 import User from './pages/User.tsx'
 import RecipeDetail from './pages/RecipeDetail.tsx'
 import Login from './pages/Login.tsx'
+import Profile from './pages/Profile.tsx'
+import NotFound from './pages/NotFound.tsx'
 
 const Layout = () => (
     <>
@@ -40,6 +42,14 @@ const router = createBrowserRouter([
             {
                 path: '/login',
                 element: <Login/>
+            },
+            {
+                path: '/profile',
+                element: <Profile/>
+            },
+            {
+                path: '*',
+                element: <NotFound/>
             }
         ]
     }

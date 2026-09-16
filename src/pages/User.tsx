@@ -16,18 +16,11 @@ function User() {
 
     return (
         <>
-            <h1>{user.username}</h1>
+            <div className="detail">
+                <h1>{user.username}</h1>
 
-            <img src={user.image} alt={user.image}/>
-
-            <p>Prénom :{user.firstName}</p>
-            <p>Nom :{user.lastName}</p>
-            <p>Email :{user.email}</p>
-            <p>Téléphone :{user.phone}</p>
-            <p>Age :{user.age}</p>
-            <p>Rôle :{user.role}</p>
-            <p>Ville :{user.address.city}</p>
-            <p>Entreprise :{user.company.name}</p>
+                <img src={user.image} alt={user.username}/>
+            </div>
         </>
 
     );

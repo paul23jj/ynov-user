@@ -21,6 +21,7 @@ function Login() {
         }
 
         setError('')
+        localStorage.setItem('connectedUserId', String(user.id))
         navigate(`/profile`)
     }
 
@@ -29,7 +30,7 @@ function Login() {
         <>
             <h1>Connexion</h1>
 
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={handleSubmit} className="form">
                 <div>
                     <label htmlFor="username">Username: </label>
                     <input type="text"
@@ -51,7 +52,7 @@ function Login() {
                            required/>
                 </div>
 
-                {error && <p>{error}</p>}
+                {error && <p className="error">{error}</p>}
 
                 <button type="submit">Se connecter</button>
             </form>
