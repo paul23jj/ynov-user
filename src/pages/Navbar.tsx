@@ -7,6 +7,8 @@ function Header() {
                 <li><Link to="/">Home</Link></li>
                 <li><Link to="/userList">User List</Link></li>
                 <li><Link to="/user/:username">User</Link></li>
+                <li><Link to="/login">Login</Link></li>
+                <li><Link to="profile">Profil</Link></li>
             </ul>
         </nav>
     );
