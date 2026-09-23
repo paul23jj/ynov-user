@@ -55,6 +55,31 @@ function Favoris() {
 
     }, [loggedUser]);
 
+    const removeFavorite = (id: number) => {
+
+        if (!loggedUser) return;
+
+        const savedFavorites = localStorage.getItem(
+            `favorites_${loggedUser.id}`
+        );
+
+        if (!savedFavorites) return;
+
+        const favoriteIds: number[] = JSON.parse(savedFavorites);
+
+        const newFavorites = favoriteIds.filter(
+            (favoriteId) => favoriteId !== id
+        );
+
+        localStorage.setItem(
+            `favorites_${loggedUser.id}`,
+            JSON.stringify(newFavorites)
+        );
+
+        setFavorites(
+            favorites.filter((recipe) => recipe.id !== id)
+        );
+    };
 
     return (
         <>
@@ -80,6 +105,10 @@ function Favoris() {
                         <Link to={`/recipe/${recipe.id}`}>
                             recette
                         </Link>
+
+                        <button onClick={() => removeFavorite(recipe.id)}>
+                            Retirer des favoris
+                        </button>
 
                     </article>
 
