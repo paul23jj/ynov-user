@@ -21,6 +21,7 @@ function RecipeDetail() {
             }
         }) ();
     }, [id]);
+
     if (!recipe) {
         return (
             <p>Chargement...</p>
