@@ -1,5 +1,7 @@
 import { Outlet } from "react-router";
+import { Navigate } from "react-router-dom";
 import App from "./App.tsx";
+import Favoris from "./pages/favoris.tsx";
 import Login from "./pages/Login.tsx";
 import Header from "./pages/Navbar.tsx";
 import NotFound from "./pages/NotFound.tsx";
@@ -9,7 +11,6 @@ import User from "./pages/User.tsx";
 import UserList from "./pages/UserList.tsx";
 import GuestRoute from "./routes/GuestRoute.tsx";
 import PrivateRoute from "./routes/PrivateRoute.tsx";
-import { Navigate } from "react-router-dom";
 
 const Layout = () => (
     <>
@@ -29,6 +30,10 @@ const routes = [
             {
                 path: "/recipes",
                 element: <App />,
+            },
+            {
+                path: "/favoris",
+                element: <Favoris />,
             },
             {
                 path: "/userList",
