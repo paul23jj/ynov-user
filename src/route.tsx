@@ -11,13 +11,8 @@ import NotFound from "./pages/NotFound.tsx";
 
 import GuestRoute from "./routes/GuestRoute.tsx";
 import PrivateRoute from "./routes/PrivateRoute.tsx";
-import PrivateRoute from "./routes/PrivateRoute.tsx";
 
 const Layout = () => (
-  <>
-    <Header />
-    <Outlet />
-  </>
   <>
     <Header />
     <Outlet />
@@ -73,4 +68,3 @@ const routes = [
 ];
 
 export default routes;
-
