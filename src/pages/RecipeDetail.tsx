@@ -1,16 +1,27 @@
-import { useParams } from 'react-router'
-import recipesData from '../data/recipes.json'
-
+import axios from "axios"
+import { useEffect, useState } from "react"
+import { useParams } from 'react-router-dom'
+import type { Recipe as RecipeType } from "../type/recipe"
 function RecipeDetail() {
-    const { id } = useParams()
-    const recipe = recipesData.recipes.find((recipe) => recipe.id === Number(id))
+    const { id } = useParams<{ id: string}>();
+    const [recipe, setRecipe] = useState<RecipeType | null>(null);
+    useEffect(() => {
+        if (!id) return;
 
+        const url = `https://dummyjson.com/recipes/${id}`;
+
+        (async () => {
+            try{
+                const response = await axios.get<RecipeType>(url);
+                setRecipe(response.data);
+            } catch (e) {
+                console.error(e);
+            }
+        }) ();
+    }, [id]);
     if (!recipe) {
         return (
-            <>
-                <h1>Recette introuvable</h1>
-                <p>la recette demandée n'existe pas...</p>
-            </>
+            <p>Chargement...</p>
         )
     }
 

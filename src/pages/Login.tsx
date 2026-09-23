@@ -1,6 +1,5 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router'
-import usersData from '../data/users.json'
 
 function Login() {
     const [username, setUsername] = useState('')
@@ -8,21 +7,37 @@ function Login() {
     const [error, setError] = useState('')
     const navigate = useNavigate()
 
-    function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
+    async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
         event.preventDefault()
 
-        const user = usersData.users.find((user) => (
-            user.username === username && user.password === password
-        ))
+        try {
+            const response = await fetch('https://dummyjson.com/auth/login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    username: username,
+                    password: password,
+                    expiresInMins: 30,
+                }),
+                credentials: 'include',
+            })
 
-        if (!user) {
-            setError('Identifiants incorrects')
-            return
+            if (!response.ok) {
+                setError('Identifiants incorrects')
+                return
+            }
+
+            const data = await response.json()
+
+            setError('')
+            console.log('success')
+            navigate(`/user/${data.id}`)
+        } catch (e) {
+            console.error(e)
+            console.log('erreur')
         }
-
-        setError('')
-        localStorage.setItem('connectedUserId', String(user.id))
-        navigate(`/profile`)
     }
 
 

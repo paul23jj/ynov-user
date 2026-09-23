@@ -1,16 +1,29 @@
-import { useParams } from 'react-router'
-import usersData from '../data/users.json'
+import axios from "axios"
+import { useEffect, useState } from "react"
+import { useParams } from "react-router-dom"
+import type { User as UserType} from "../type/user"
 
 function User() {
-    const { id } = useParams()
-    const user = usersData.users.find((user) => user.id === Number(id))
+    const { id } = useParams<{ id: string}>();
+    const [user, setUser] = useState<UserType | null>(null);
+    useEffect(() => {
+        if (!id) return;
 
-    if(!user) {
-        return(
-            <>
-                <h1>Utilisateur introuvable</h1>
-                <p>l'utilisateur demandé n'existe pas...</p>
-            </>
+        const url = `https://dummyjson.com/users/${id}`;
+
+        (async () => {
+            try{
+                const response = await axios.get<UserType>(url);
+                setUser(response.data);
+            } catch (e) {
+                console.error(e);
+            }
+        }) ();
+    }, [id]);
+
+    if (!user) {
+        return (
+            <p>Chargement...</p>
         )
     }
 
@@ -24,6 +37,8 @@ function User() {
         </>
 
     );
+
 }
 
 export default User;
+

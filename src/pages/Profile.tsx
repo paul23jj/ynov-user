@@ -1,24 +1,72 @@
-import { Navigate } from 'react-router'
-import { useNavigate } from 'react-router'
-import usersData from '../data/users.json'
+
+import { useNavigate, Navigate } from 'react-router'
+import { useState, useEffect } from 'react'
+import type { User } from '../type/user'
 
 function Profile() {
     const navigate = useNavigate()
+    const [user, setUser] = useState<User | null>(null)
+    const [error, setError] = useState('')
+
     const connectedUserId = localStorage.getItem('connectedUserId')
+    const accessToken = localStorage.getItem('accessToken')
 
-    if(!connectedUserId) {
-        return <Navigate to="/login" />
-    }
+    useEffect(() => {
+        if (!connectedUserId || !accessToken) {
+            return
+        }
 
-    const user = usersData.users.find((user) => user.id === Number(connectedUserId))
+        async function getCurrentUser() {
+            try {
+                const response = await fetch('https://dummyjson.com/auth/me', {
+                    method: 'GET',
+                    headers: {
+                        Authorization: `Bearer ${accessToken}`,
+                    },
+                    credentials: 'include',
+                })
 
-    if(!user) {
-        return <Navigate to="/login" />
-    }
+                if (!response.ok) {
+                    setError('Token incorrect')
+                    return
+                }
+
+                const data: User = await response.json()
+
+                setUser(data)
+                setError('')
+            } catch (e) {
+                console.error(e)
+                setError('Une erreur est survenue')
+            }
+        }
+
+        getCurrentUser()
+    }, [connectedUserId, accessToken])
 
     function handleLogout() {
         localStorage.removeItem('connectedUserId')
+        localStorage.removeItem('accessToken')
+        localStorage.removeItem('refreshToken')
         navigate('/login')
+    }
+
+    if (!connectedUserId || !accessToken) {
+        return <Navigate to="/login" />
+    }
+
+
+    if (!user && error) {
+        return (
+            <>
+                <p>Impossible de récupérer le profil</p>
+                {error && <p className="error">{error}</p>}
+            </>
+        )
+    }
+
+    if (!user) {
+        return <p>Chargement...</p>
     }
 
     return(
@@ -33,6 +81,8 @@ function Profile() {
 
                 <button type="button" onClick={handleLogout}>Se déconnecter</button>
             </div>
+
+            {error && <p className="error">{error}</p>}
         </>
     )
 }
