@@ -1,22 +1,23 @@
 import { Outlet } from "react-router";
 import { Navigate } from "react-router-dom";
 import App from "./App.tsx";
-import Favoris from "./pages/Favoris.tsx";
-import Login from "./pages/Login.tsx";
-import Header from "./pages/Navbar.tsx";
-import NotFound from "./pages/NotFound.tsx";
-import Profile from "./pages/Profile.tsx";
-import RecipeDetail from "./pages/RecipeDetail.tsx";
-import User from "./pages/User.tsx";
 import UserList from "./pages/UserList.tsx";
+import Header from "./pages/Navbar.tsx";
+import User from "./pages/User.tsx";
+import RecipeDetail from "./pages/RecipeDetail.tsx";
+import Login from "./pages/Login.tsx";
+import Profile from "./pages/Profile.tsx";
+import NotFound from "./pages/NotFound.tsx";
+import Favoris from "./pages/Favoris.tsx";
 import GuestRoute from "./routes/GuestRoute.tsx";
-import PrivateRoute from "./routes/PrivateRoute.tsx";
+import PostList from "./pages/PostList.tsx";
+import PostDetail from "./pages/PostDetail.tsx";
 
 const Layout = () => (
-  <>
-    <Header />
-    <Outlet />
-  </>
+    <>
+      <Header />
+      <Outlet />
+    </>
 );
 
 const routes = [
@@ -50,22 +51,22 @@ const routes = [
       {
         path: "/login",
         element: (
-          <GuestRoute>
-            <Login />
-          </GuestRoute>
-        ),
-      },
-      {
-        path: "/login",
-        element: (
-          <PrivateRoute>
-            <Login />
-          </PrivateRoute>
+            <GuestRoute>
+              <Login />
+            </GuestRoute>
         ),
       },
       {
         path: "/profile",
         element: <Profile />,
+      },
+      {
+        path: "/posts",
+        element: <PostList />,
+      },
+      {
+        path: "/posts/:id",
+        element: <PostDetail />,
       },
       {
         path: "*",
