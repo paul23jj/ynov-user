@@ -2,9 +2,11 @@ import axios from "axios"
 import { useEffect, useState } from "react"
 import { useParams } from 'react-router-dom'
 import type { Recipe as RecipeType } from "../type/recipe"
+
 function RecipeDetail() {
     const { id } = useParams<{ id: string}>();
     const [recipe, setRecipe] = useState<RecipeType | null>(null);
+
     useEffect(() => {
         if (!id) return;
 
