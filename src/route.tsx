@@ -11,8 +11,13 @@ import NotFound from "./pages/NotFound.tsx";
 
 import GuestRoute from "./routes/GuestRoute.tsx";
 import PrivateRoute from "./routes/PrivateRoute.tsx";
+import PrivateRoute from "./routes/PrivateRoute.tsx";
 
 const Layout = () => (
+  <>
+    <Header />
+    <Outlet />
+  </>
   <>
     <Header />
     <Outlet />
@@ -27,22 +32,18 @@ const routes = [
         path: "/",
         element: <App />,
       },
-
       {
         path: "/userList",
         element: <UserList />,
       },
-
       {
         path: "/user/:id",
         element: <User />,
       },
-
       {
         path: "/recipe/:id",
         element: <RecipeDetail />,
       },
-
       {
         path: "/login",
         element: (
@@ -51,16 +52,18 @@ const routes = [
           </GuestRoute>
         ),
       },
-
       {
-        path: "/profile",
+        path: "/login",
         element: (
           <PrivateRoute>
-            <Profile />
+            <Login />
           </PrivateRoute>
         ),
       },
-
+      {
+        path: "/profile",
+        element: <Profile />,
+      },
       {
         path: "*",
         element: <NotFound />,
@@ -70,3 +73,4 @@ const routes = [
 ];
 
 export default routes;
+
