@@ -1,15 +1,15 @@
-import { createRoot } from 'react-dom/client'
+import axios from 'axios';
+import { createRoot } from 'react-dom/client';
+import { Provider } from 'react-redux';
 import { createBrowserRouter } from "react-router";
 import { RouterProvider } from "react-router/dom";
-import './index.css'
-import { Provider } from 'react-redux';
-import { store } from './store/store.ts'
-import routes from './route.tsx'
-import type { User as UserType } from './type/user'
-import { setUsers } from './store/reducer/user.ts'
-import axios from 'axios'
-import { setLoggedUser } from './store/reducer/auth'
+import './index.css';
+import routes from './route.tsx';
+import { setLoggedUser } from './store/reducer/auth';
 import { setLoading } from "./store/reducer/loading.ts";
+import { setUsers } from './store/reducer/user.ts';
+import { store } from './store/store.ts';
+import type { User as UserType } from './type/user';
 
 interface UsersResponse {
     users: UserType[];

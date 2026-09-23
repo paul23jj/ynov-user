@@ -1,14 +1,15 @@
 import { Outlet } from "react-router";
 import App from "./App.tsx";
-import UserList from "./pages/UserList.tsx";
-import Header from "./pages/Navbar.tsx";
-import User from "./pages/User.tsx";
-import RecipeDetail from "./pages/RecipeDetail.tsx";
 import Login from "./pages/Login.tsx";
-import Profile from "./pages/Profile.tsx";
+import Header from "./pages/Navbar.tsx";
 import NotFound from "./pages/NotFound.tsx";
+import Profile from "./pages/Profile.tsx";
+import RecipeDetail from "./pages/RecipeDetail.tsx";
+import User from "./pages/User.tsx";
+import UserList from "./pages/UserList.tsx";
 import GuestRoute from "./routes/GuestRoute.tsx";
-import PrivateRoute from "./routes/PrivateRoute.tsx"
+import PrivateRoute from "./routes/PrivateRoute.tsx";
+import { Navigate } from "react-router-dom";
 
 const Layout = () => (
     <>
@@ -23,6 +24,10 @@ const routes = [
         children: [
             {
                 path: "/",
+                element: <Navigate to="/recipes" replace />,
+            },
+            {
+                path: "/recipes",
                 element: <App />,
             },
             {
