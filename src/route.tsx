@@ -10,6 +10,7 @@ import NotFound from "./pages/NotFound.tsx";
 import GuestRoute from "./routes/GuestRoute.tsx";
 import PrivateRoute from "./routes/PrivateRoute.tsx"
 import PostList from "./pages/PostList.tsx"
+import PostDetail from "./pages/PostDetail.tsx"
 
 const Layout = () => (
     <>
@@ -61,6 +62,10 @@ const routes = [
             {
                 path: "/posts",
                 element: <PostList />
+            },
+            {
+                path: "/posts/:id",
+                element: <PostDetail />
             },
             {
                 path: "*",
