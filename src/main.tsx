@@ -37,6 +37,8 @@ const getLoggedUser = async () => {
     }
 }
 
+
+
 Promise.all([getUsers(), getLoggedUser()]).finally(() => store.dispatch(setLoading(false)))
 
 const router = createBrowserRouter(routes);

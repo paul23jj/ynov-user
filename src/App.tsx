@@ -1,12 +1,19 @@
 import axios from "axios"
 import { useEffect, useState } from "react"
 import { Link } from "react-router"
-import type { Recipe } from "./type/recipe"
 import './App.css'
+import type { Quotes } from './type/quotes'
+import type { Recipe } from "./type/recipe"
 
 interface RecipeResponse {
     recipes: Recipe[]
 }
+
+interface QuotesResponse {
+    quotes: Quotes[]
+}
+
+const day = new Date().getDate();
 
 function App() {
     const url = "https://dummyjson.com/recipes";
@@ -21,11 +28,32 @@ function App() {
             }
         })();
     }, []);
+
+const quoteUrl = `https://dummyjson.com/quotes/${day}`;
+const [quote, setQuote] = useState<Quotes | null>(null);
+
+useEffect(() => {
+    (async () => {
+        try {
+            const response = await axios.get<Quotes>(quoteUrl);
+            setQuote(response.data);
+        } catch (e) {
+            console.error(e);
+        }
+    })();
+}, []);
     return (
         <>
             <section>
                 <h1>Paul GAULMIN</h1>
-                <p>catalogue des recettes</p>
+                <div>
+                    {quote && (
+                        <>
+                        <p>{quote.quote}</p>
+                        <p>{quote.author}</p>
+                        </>
+                    )}
+                </div>
             </section>
 
             <section>
