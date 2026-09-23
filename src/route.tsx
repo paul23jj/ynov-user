@@ -10,7 +10,6 @@ import Profile from "./pages/Profile.tsx";
 import NotFound from "./pages/NotFound.tsx";
 import Favoris from "./pages/Favoris.tsx";
 import GuestRoute from "./routes/GuestRoute.tsx";
-import PrivateRoute from "./routes/PrivateRoute.tsx";
 import PostList from "./pages/PostList.tsx";
 import PostDetail from "./pages/PostDetail.tsx";
 
