@@ -1,32 +1,91 @@
-# React + TypeScript + Vite
+# Forum cuisine
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+Forum cuisine est un projet en groupe ayant pour objectife de se familiariser avec React.
 
-Currently, two official plugins are available:
+## Installation
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+### Prérequis
 
-## React Compiler
+- Un IDE (VS Code, PyCharm...)
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+### Commandes exactes
 
-## Expanding the Oxlint configuration
+- Récupérer le repository via la commande :
+  ```bash
+  git clone https://github.com/paul23jj/ynov-user.git
+  ```
 
-If you are developing a production application, we recommend enabling type-aware lint rules by installing `oxlint-tsgolint` and editing `.oxlintrc.json`:
+- Installer les dépendances npm :
+  ```bash
+  npm install
+  npm run dev
+  ```
 
-```json
-{
-  "$schema": "./node_modules/oxlint/configuration_schema.json",
-  "plugins": ["react", "typescript", "oxc"],
-  "options": {
-    "typeAware": true
-  },
-  "rules": {
-    "react/rules-of-hooks": "error",
-    "react/only-export-components": ["warn", { "allowConstantExport": true }]
-  }
-}
+## Dépendances
+
+Nous utilisons une API sur la cuisine.
+
+Voici la documentation de l'API en question :
+https://dummyjson.com/docs
+
+## Usage
+
+Pour lancer le projet, il suffit d'effectuer la commande suivante à la racine du projet :
+
+```bash
+npm run dev
 ```
 
-See the [Oxlint rules documentation](https://oxc.rs/docs/guide/usage/linter/rules) for the full list of rules and categories.
+## Visuel
+
+<p align="center">
+  <img src="acceuil.png" alt="Page d'accueil Art Gallery" width="100%">
+</p>
+
+<p align="center">
+  <img src="connexion.png" alt="Page artistes Art Gallery" width="100%">
+</p>
+
+## Architecture
+
+```text
+ynov-user/
+├── public/              # Fichiers statiques
+│   ├── favicon.svg
+│   └── icons.svg
+│
+├── src/                 # Code source de l'application
+│   ├── assets/          # Images et ressources
+│   ├── data/            # Données locales
+│   ├── pages/           # Pages de l'application
+│   ├── routes/          # Gestion des routes et routes protégées
+│   ├── store/           # Gestion de l'état global avec Redux
+│   │   ├── reducer/     # Reducers Redux
+│   │   └── store.ts     # Configuration du store Redux
+│   │
+│   ├── type/            # Interfaces et types TypeScript
+│   ├── App.css          # Styles du composant principal
+│   ├── App.tsx          # Composant principal
+│   ├── index.css        # Styles globaux
+│   ├── main.tsx         # Point d'entrée React
+│   └── route.tsx        # Déclaration des routes
+│
+├── .gitignore
+├── oxlint.json
+├── index.html
+├── package-lock.json
+├── package.json
+├── README.md
+├── tsconfig.app.json
+├── tsconfig.json
+├── tsconfig.node.json
+└── vite.config.ts
+```
+
+## Support
+
+*Le projet n'est pas supporté.*
+
+## Licence
+
+Projet pédagogique, non destiné à la diffusion
