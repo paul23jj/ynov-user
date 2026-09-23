@@ -32,7 +32,7 @@ const routes = [
         element: <App />,
       },
       {
-        path: "/favoris",
+        path: "/favorites",
         element: <Favoris />,
       },
       {

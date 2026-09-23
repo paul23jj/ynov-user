@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import { createRoot } from "react-dom/client";
 import { createBrowserRouter } from "react-router";
 import { RouterProvider } from "react-router/dom";
@@ -14,20 +13,6 @@ import { setUsers } from "./store/reducer/user";
 import axios from "axios";
 import { setLoggedUser } from "./store/reducer/auth";
 import { setLoading } from "./store/reducer/loading";
-=======
-import axios from 'axios';
-import { createRoot } from 'react-dom/client';
-import { Provider } from 'react-redux';
-import { createBrowserRouter } from "react-router";
-import { RouterProvider } from "react-router/dom";
-import './index.css';
-import routes from './route.tsx';
-import { setLoggedUser } from './store/reducer/auth';
-import { setLoading } from "./store/reducer/loading.ts";
-import { setUsers } from './store/reducer/user.ts';
-import { store } from './store/store.ts';
-import type { User as UserType } from './type/user';
->>>>>>> spike
 
 interface UsersResponse {
   users: UserType[];
@@ -48,7 +33,6 @@ const getUsers = async () => {
 const getLoggedUser = async () => {
   const accessToken = localStorage.getItem("accessToken");
 
-<<<<<<< HEAD
   if (!accessToken) {
     store.dispatch(setLoggedUser(null));
     return;
@@ -79,11 +63,6 @@ const getLoggedUser = async () => {
 Promise.all([getUsers(), getLoggedUser()]).finally(() => {
   store.dispatch(setLoading(false));
 });
-=======
-
-
-Promise.all([getUsers(), getLoggedUser()]).finally(() => store.dispatch(setLoading(false)))
->>>>>>> spike
 
 const router = createBrowserRouter(routes);
 
