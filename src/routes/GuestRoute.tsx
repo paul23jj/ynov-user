@@ -4,13 +4,19 @@ import { useSelector } from "react-redux";
 import type { RootState } from "../store/store";
 
 interface GuestRouteProps {
-    children: ReactNode;
+  children: ReactNode;
 }
 
 const GuestRoute = ({ children }: GuestRouteProps) => {
-    const loggedUser = useSelector((state: RootState) => state.auth.loggedUser);
+  const loggedUser = useSelector((state: RootState) => state.auth.loggedUser);
 
-    return loggedUser ? <Navigate to="/" replace /> : <>{children}</>;
+  const loading = useSelector((state: RootState) => state.loading.value);
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
+  return loggedUser ? <Navigate to="/profile" replace /> : <>{children}</>;
 };
 
 export default GuestRoute;
