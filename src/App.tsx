@@ -1,141 +1,66 @@
-import axios from "axios"
-import { useEffect, useState } from "react"
-import { useSelector } from "react-redux"
-import { Link } from "react-router"
-import './App.css'
-import type { RootState } from "./store/store"
-import type { Quotes } from './type/quotes'
-import type { Recipe } from "./type/recipe"
+import axios from "axios";
+import { useEffect, useState } from "react";
+import { Link } from "react-router";
+import { useSelector } from "react-redux";
 
+import type { Recipe } from "./type/recipe";
+import type { RootState } from "./store/store";
+
+import "./App.css";
 
 interface RecipeResponse {
-    recipes: Recipe[]
+  recipes: Recipe[];
 }
-
-interface QuotesResponse {
-    quotes: Quotes[]
-}
-
-const day = new Date().getDate();
 
 function App() {
-    const url = "https://dummyjson.com/recipes";
-    const [recipes, setRecipes] = useState<Recipe[]>([])
-    useEffect(() => {
-        (async () => {
-            try {
-                const response = await axios.get<RecipeResponse>(url);
-                setRecipes(response.data.recipes);
-            } catch (e) {
-                console.error(e);
-            }
-        })();
-    }, []);
+  const url = "https://dummyjson.com/recipes";
 
-const quoteUrl = `https://dummyjson.com/quotes/${day}`;
-const [quote, setQuote] = useState<Quotes | null>(null);
+  const [recipes, setRecipes] = useState<Recipe[]>([]);
 
-useEffect(() => {
+  const loggedUser = useSelector((state: RootState) => state.auth.loggedUser);
+
+  useEffect(() => {
     (async () => {
-        try {
-            const response = await axios.get<Quotes>(quoteUrl);
-            setQuote(response.data);
-        } catch (e) {
-            console.error(e);
-        }
+      try {
+        const response = await axios.get<RecipeResponse>(url);
+        setRecipes(response.data.recipes);
+      } catch (e) {
+        console.error(e);
+      }
     })();
-}, []);
-const loggedUser = useSelector(
-    (state: RootState) => state.auth.loggedUser
-);
+  }, []);
 
-const connected = loggedUser != null;
-const [favorites, setFavorites] = useState<number[]>([]);
-useEffect(() => {
-    if (!loggedUser) {
-        setFavorites([]);
-        return;
-    }
+  return (
+    <>
+      <section>
+        <h1>
+          {loggedUser
+            ? `${loggedUser.firstName} ${loggedUser.lastName}`
+            : "Bienvenue"}
+        </h1>
 
-    const savedFavorites = localStorage.getItem(
-        `favorites_${loggedUser.id}`
-    );
+        <p>catalogue des recettes</p>
+      </section>
 
-    if (savedFavorites) {
-        setFavorites(JSON.parse(savedFavorites));
-    } else {
-        setFavorites([]);
-    }
+      <section>
+        <h2>recettes :</h2>
 
-}, [loggedUser]);
-const toggleFavorite = (id: number) => {
+        <div className="grid">
+          {recipes.map((recipe) => (
+            <article key={recipe.id} className="card">
+              <img src={recipe.image} alt={recipe.name} />
 
-    if (!loggedUser) return;
+              <h3>{recipe.name}</h3>
 
-    let newFavorites: number[];
+              <p>Temps de préparation : {recipe.prepTimeMinutes} min</p>
 
-    if (favorites.includes(id)) {
-
-        newFavorites = favorites.filter(
-            (favoriteId) => favoriteId !== id
-        );
-
-    } else {
-
-        newFavorites = [...favorites, id];
-
-    }
-
-    setFavorites(newFavorites);
-
-    localStorage.setItem(
-        `favorites_${loggedUser.id}`,
-        JSON.stringify(newFavorites)
-    );
-};
-    return (
-        <>
-            <section>
-                <h1>Paul GAULMIN</h1>
-                <div>
-                    {quote && (
-                        <>
-                        <p>{quote.quote}</p>
-                        <p>{quote.author}</p>
-                        </>
-                    )}
-                </div>
-            </section>
-
-            <section>
-                <h2>recettes :</h2>
-
-                <div className="grid">
-                    {recipes.map((recipe) => (
-                    <article key={recipe.id} className="card">
-                          <img src={recipe.image} alt={recipe.name} />
-                          <h3>{recipe.name}</h3>
-                          <p>
-                              Temps de préparation : {recipe.prepTimeMinutes} min
-                          </p>
-                          <Link to={`/recipe/${recipe.id}`}>
-                              recette
-                          </Link>
-                          {connected && (
-                              <button onClick={() => toggleFavorite(recipe.id)}>
-                                  {favorites.includes(recipe.id)
-                                      ? "Retirer des favoris"
-                                      : "Ajouter aux favoris"
-                                  }
-                              </button>
-                          )}
-
-    </article>
-))}
-                </div>
-            </section>
-        </>
-    )
+              <Link to={`/recipe/${recipe.id}`}>recette</Link>
+            </article>
+          ))}
+        </div>
+      </section>
+    </>
+  );
 }
 
-export default App
+export default App;
