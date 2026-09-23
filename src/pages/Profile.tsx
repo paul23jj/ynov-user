@@ -1,90 +1,125 @@
-
-import { useNavigate, Navigate } from 'react-router'
-import { useState, useEffect } from 'react'
-import type { User } from '../type/user'
+import { useEffect, useState } from "react";
+import { Navigate } from "react-router";
+import { useSelector } from "react-redux";
+import type { RootState } from "../store/store";
+import type { User } from "../type/user";
+import axios from "axios";
 
 function Profile() {
-    const navigate = useNavigate()
-    const [user, setUser] = useState<User | null>(null)
-    const [error, setError] = useState('')
+  const loggedUser = useSelector((state: RootState) => state.auth.loggedUser);
 
-    const connectedUserId = localStorage.getItem('connectedUserId')
-    const accessToken = localStorage.getItem('accessToken')
+  const [user, setUser] = useState<User | null>(null);
+  const [error, setError] = useState("");
 
-    useEffect(() => {
-        if (!connectedUserId || !accessToken) {
-            return
-        }
+  const accessToken = localStorage.getItem("accessToken");
 
-        async function getCurrentUser() {
-            try {
-                const response = await fetch('https://dummyjson.com/auth/me', {
-                    method: 'GET',
-                    headers: {
-                        Authorization: `Bearer ${accessToken}`,
-                    },
-                    credentials: 'include',
-                })
-
-                if (!response.ok) {
-                    setError('Token incorrect')
-                    return
-                }
-
-                const data: User = await response.json()
-
-                setUser(data)
-                setError('')
-            } catch (e) {
-                console.error(e)
-                setError('Une erreur est survenue')
-            }
-        }
-
-        getCurrentUser()
-    }, [connectedUserId, accessToken])
-
-    function handleLogout() {
-        localStorage.removeItem('connectedUserId')
-        localStorage.removeItem('accessToken')
-        localStorage.removeItem('refreshToken')
-        navigate('/login')
+  useEffect(() => {
+    if (!accessToken) {
+      return;
     }
 
-    if (!connectedUserId || !accessToken) {
-        return <Navigate to="/login" />
+    async function getCurrentUser() {
+      try {
+        const response = await axios.get<User>(
+          "https://dummyjson.com/auth/me",
+          {
+            headers: {
+              Authorization: `Bearer ${accessToken}`,
+            },
+          },
+        );
+
+        setUser(response.data);
+        setError("");
+      } catch (e) {
+        console.error(e);
+        setError("Impossible de récupérer le profil");
+      }
     }
 
+    getCurrentUser();
+  }, [accessToken]);
 
-    if (!user && error) {
-        return (
-            <>
-                <p>Impossible de récupérer le profil</p>
-                {error && <p className="error">{error}</p>}
-            </>
-        )
-    }
+  if (!loggedUser) {
+    return <Navigate to="/login" replace />;
+  }
 
-    if (!user) {
-        return <p>Chargement...</p>
-    }
+  if (error) {
+    return (
+      <>
+        <p>Impossible de récupérer le profil</p>
+        <p className="error">{error}</p>
+      </>
+    );
+  }
 
-    return(
+  if (!user) {
+    return <p>Chargement...</p>;
+  }
+
+  return (
+    <div className="detail">
+      <h1>Mon profil</h1>
+
+      <img src={user.image} alt={user.username} />
+
+      <p>
+        <strong>Prénom :</strong> {user.firstName}
+      </p>
+
+      <p>
+        <strong>Nom :</strong> {user.lastName}
+      </p>
+
+      <p>
+        <strong>Username :</strong> {user.username}
+      </p>
+
+      <p>
+        <strong>Email :</strong> {user.email}
+      </p>
+
+      <p>
+        <strong>Téléphone :</strong> {user.phone}
+      </p>
+
+      <p>
+        <strong>Âge :</strong> {user.age}
+      </p>
+
+      <p>
+        <strong>Date de naissance :</strong> {user.birthDate}
+      </p>
+
+      <p>
+        <strong>Genre :</strong> {user.gender}
+      </p>
+
+      <p>
+        <strong>Rôle :</strong> {user.role}
+      </p>
+
+      {user.address && (
         <>
-            <div className="detail">
-                <h1>Profil</h1>
-                <img src={user.image} alt={user.username} />
-                <p>Prénom : {user.firstName}</p>
-                <p>Nom : {user.lastName}</p>
-                <p>Username : {user.username}</p>
-                <p>Email : {user.email}</p>
-
-                <button type="button" onClick={handleLogout}>Se déconnecter</button>
-            </div>
-
-            {error && <p className="error">{error}</p>}
+          <h2>Adresse</h2>
+          <p>{user.address.address}</p>
+          <p>
+            {user.address.postalCode} {user.address.city}
+          </p>
+          <p>{user.address.country}</p>
         </>
-    )
+      )}
+
+      {user.company && (
+        <>
+          <h2>Entreprise</h2>
+          <p>{user.company.name}</p>
+          <p>{user.company.department}</p>
+          <p>{user.company.title}</p>
+        </>
+      )}
+    </div>
+  );
 }
 
-export default Profile
+export default Profile;
