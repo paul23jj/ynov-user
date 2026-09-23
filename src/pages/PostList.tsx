@@ -34,7 +34,7 @@ function PostList() {
                     <article key={post.id} className="card">
                         <h2>{post.title}</h2>
                         <p>{post.body.slice(0, 100) + '...'}</p>
-                        <p>{post.reactions.likes} {post.reactions.dislikes}</p>
+                        <p>👍{post.reactions.likes}  👎{post.reactions.dislikes}</p>
                         <p>{post.views}</p>
 
                         <Link to={`/posts/${post.id}`}>Voir le post</Link>

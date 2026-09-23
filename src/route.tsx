@@ -9,6 +9,7 @@ import Profile from "./pages/Profile.tsx";
 import NotFound from "./pages/NotFound.tsx";
 import GuestRoute from "./routes/GuestRoute.tsx";
 import PrivateRoute from "./routes/PrivateRoute.tsx"
+import PostList from "./pages/PostList.tsx"
 
 const Layout = () => (
     <>
@@ -56,6 +57,10 @@ const routes = [
             {
                 path: "/profile",
                 element: <Profile />,
+            },
+            {
+                path: "/posts",
+                element: <PostList />
             },
             {
                 path: "*",
