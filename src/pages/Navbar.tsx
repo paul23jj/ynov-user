@@ -22,35 +22,18 @@ function Header() {
   return (
     <nav className="Header">
       <ul>
-        <li>
-          <Link to="/">Accueil</Link>
-        </li>
-
-        <li>
-          <Link to="/userList">Annuaire</Link>
-        </li>
+        <li><Link to="/">Accueil</Link></li>
+        <li><Link to="/userList">Annuaire</Link></li>
 
         {!loggedUser && (
-          <li>
-            <Link to="/login">Connexion</Link>
-          </li>
+          <li><Link to="/login">Connexion</Link></li>
         )}
 
         {loggedUser && (
           <>
-            <li>
-              <Link to="/profile">Profil</Link>
-            </li>
-
-            <li>
-              <Link to="/favorites">Favoris</Link>
-            </li>
-
-            <li>
-              <button type="button" onClick={handleLogout}>
-                Déconnexion
-              </button>
-            </li>
+            <li><Link to="/profile">Profil</Link></li>
+            <li><Link to="/favorites">Favoris</Link></li>
+            <li><button type="button" onClick={handleLogout}>Déconnexion</button></li>
           </>
         )}
       </ul>
