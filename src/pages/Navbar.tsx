@@ -24,6 +24,7 @@ function Header() {
       <ul>
         <li><Link to="/">Accueil</Link></li>
         <li><Link to="/userList">Annuaire</Link></li>
+        <li><Link to="/posts">posts</Link></li>
 
         {!loggedUser && (
           <li><Link to="/login">Connexion</Link></li>
