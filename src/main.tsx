@@ -13,6 +13,13 @@ import { setUsers } from "./store/reducer/user";
 import axios from "axios";
 import { setLoggedUser } from "./store/reducer/auth";
 import { setLoading } from "./store/reducer/loading";
+import SocketService from './services/socketServices.ts'
+
+const socket = SocketService.getInstance().socket;
+socket.on("FromAPI", data => {
+  console.log(data)
+})
+
 
 interface UsersResponse {
   users: UserType[];

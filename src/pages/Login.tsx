@@ -5,6 +5,8 @@ import { useDispatch } from "react-redux";
 import type { AppDispatch } from "../store/store";
 import { setLoggedUser } from "../store/reducer/auth";
 import type { User } from "../type/user";
+import SocketService from "../services/socketServices";
+
 
 interface LoginResponse extends User {
   accessToken: string;
@@ -46,6 +48,9 @@ function Login() {
       localStorage.setItem("connectedUserId", String(data.id));
 
       dispatch(setLoggedUser(data));
+
+      SocketService.getInstance().socket.emit('user login', data);
+
 
       navigate("/profile");
     } catch (e) {

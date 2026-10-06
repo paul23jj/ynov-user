@@ -7,6 +7,7 @@ import "./App.css";
 import type { RootState } from "./store/store";
 import type { Quotes } from "./type/quotes";
 import type { Recipe } from "./type/recipe";
+import SocketServices from "./services/socketServices";
 
 interface RecipeResponse {
   recipes: Recipe[];
@@ -18,6 +19,14 @@ function App() {
   const url = "https://dummyjson.com/recipes";
 
   const [recipes, setRecipes] = useState<Recipe[]>([]);
+  const [newUser, setNewUser] = useState("")
+
+  useEffect(() => {
+    const socket = SocketServices.getInstance().socket;
+    socket.on("new login", data => {
+      setNewUser(data);
+    })
+  })
 
   useEffect(() => {
     (async () => {
@@ -97,6 +106,7 @@ function App() {
         </h1>
 
         <div>
+          {newUser && <p>Last login : {newUser}</p>}
           {quote && (
             <>
               <p>{quote.quote}</p>

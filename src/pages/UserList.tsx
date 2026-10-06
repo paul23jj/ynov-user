@@ -3,7 +3,8 @@ import { useSelector } from "react-redux";
 import type { RootState } from "../store/store";
 
 function UserList() {
-  const users = useSelector((state: RootState) => state.user.users);
+    const users = useSelector((state: RootState) => state.user.users);
+    const connectedUsers = useSelector((state: RootState) => state.user.connectedUsers)
 
   return (
     <section>
@@ -14,10 +15,11 @@ function UserList() {
           <article key={user.id} className="card">
             <img src={user.image} alt={user.username} />
             <h2>
-              {user.firstName} {user.lastName}
+                {user.firstName} {user.lastName}
+                {connectedUsers.find((u) => u.user.id === user.id) && <p>🟢</p>}
             </h2>
-            <p>Username : {user.username}</p>
-            <p>Email : {user.email}</p>
+              <p>Username : {user.username}</p>
+              <p>Email : {user.email}</p>
 
             <Link to={`/user/${user.id}`}>Voir le profil</Link>
           </article>
